@@ -4,7 +4,10 @@ clear all
 [vert_glass,face_glass]=read_off('sub_glass.off');
 fprintf('Read obj1 with %i vertices\n',size(vert_glass,2))
 [vert_tab,face_tab]=read_off('sub_table.off');
+% Glass sideways
+vert_glass=[vert_glass(2,:);vert_glass(3,:);vert_glass(1,:)];
 fprintf('Read obj2 with %i vertices\n',size(vert_tab,2))
+tic
 % Get the tranlastion magnitude in y
 translation_y=max(vert_tab(2,:))-min(vert_tab(2,:));
 %  hold on
@@ -58,26 +61,18 @@ for i=1+size(new_vert_glass,2):size(new_vert_tab,2)
     vert_id_array2=[vert_id_array2;C{i}'];
 end
 fprintf('done\n')
-toc
 fprintf('Non repeated points....')
-tic
 vertices_one=V(sort(unique(vert_id_array)),:);
 vertices_two=V(sort(unique(vert_id_array2)),:);
 fprintf('done\n')
-toc
 fprintf('Bound points within sphere...')
-tic
 [points1,~]=bound(vertices_one,-sphere_rad,sphere_rad);
 [points2,~]=bound(vertices_two,-sphere_rad,sphere_rad);
 fprintf('done\n')
-toc
 fprintf('Pairwise distances....')
-tic
-distances=distancePoints(points1,points2);
+distances=distancePoints(points1,points2);    
 fprintf('done\n')
-toc
 fprintf('Ridges in common....')
-tic
 id=find(min(distances)==0);
 common=points2(id,:);
 fprintf('done\n')
