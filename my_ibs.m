@@ -5,9 +5,8 @@ clear all
 fprintf('Read obj1 with %i vertices\n',size(vert_glass,2))
 [vert_tab,face_tab]=read_off('sub_table.off');
 % Glass sideways
-vert_glass=[vert_glass(2,:);vert_glass(3,:);vert_glass(1,:)];
+%vert_glass=[vert_glass(2,:);vert_glass(3,:);vert_glass(1,:)];
 fprintf('Read obj2 with %i vertices\n',size(vert_tab,2))
-tic
 % Get the tranlastion magnitude in y
 translation_y=max(vert_tab(2,:))-min(vert_tab(2,:));
 %  hold on
@@ -46,7 +45,7 @@ hull_glass=convhull(new_vert_glass');
 hull_tab=convhull(new_vert_tab');
 all_points=[new_vert_glass new_vert_tab]';
 fprintf('Computing Voronoi diagram....')
-tic;
+tic
 [V,C]=voronoin(all_points);
 fprintf('done\n')
 vert_id_array=[];
